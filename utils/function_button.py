@@ -1,11 +1,12 @@
 from PyQt6.QtWidgets import  QPushButton
-
+import re
 
 #  ** How to use **
 #  Ini biar ada tutorial bang jangan di sangka AI hehe ..
 #  Controller nanti di buat dari class MathExecs
 #  Bisa gunakan ButtonOperation Langsung dengan controllernya saling terhubung
 #  Nanti kalau mau lihat hasil text print saja controller dari MathExecs
+#  BROOWW MathExecs aku butuh textEdit di parameter nya agar bisa change value
 
 
 class ButtonOperation(QPushButton):
@@ -19,25 +20,30 @@ class ButtonOperation(QPushButton):
 #  psuh number dan push opertor di sini langsung mengeksekusi sesuai operasi matematika
 
 class MathExecs:
-    def __init__(self):
+    def __init__(self,textState):
         self.listNumber:list = []
         self.operator = None
+        self.textState = textState
     def push_number(self, other):
         self.listNumber.append(other)
-        print(self.__str__())
+        self.textState.setText(self.__str__())
     def push_operator(self,operator):
         self.calculate()
         if (operator != "=" and str(self.listNumber[-1]) not in "-+/*"):
             self.listNumber.append(operator)
             self.operator = operator
-        print(self.__str__())
+        self.textState.setText(self.__str__())
     def calculate(self):
         if (self.operator != None and str(self.listNumber[-1]) not in "-+/*"):
-            self.listNumber :list = str(eval(self.__str__())).split()
+            operasi = re.sub(r'\b0+(\d+)', r'\1',self.__str__())
+            self.listNumber :list = str(eval(operasi)).split()
             self.operator = None
     def clearState(self):
         self.listNumber = []
         self.operator = None
 
     def __str__(self):
-        return "".join([str(num) for num in self.listNumber])
+        if (self.listNumber != []):
+            return "".join([str(num) for num in self.listNumber])
+        else:
+            return ""

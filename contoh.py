@@ -1,15 +1,17 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QWidget, QVBoxLayout
+from PyQt6.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QWidget, QVBoxLayout,QTextEdit
 from utils.function_button import ButtonOperation,MathExecs
 
 # Controller dari MathExecs untuk menyimpan sebuah nilai dari 1 - 9 dan operator
 
-numbers_controllers = MathExecs()
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("My App")
+        textField = QTextEdit()
+
+        numbers_controllers = MathExecs(textField)
         button0 = ButtonOperation(0,numbers_controllers.push_number)
         button1 = ButtonOperation(1,numbers_controllers.push_number)
         button2 = ButtonOperation(2,numbers_controllers.push_number)
@@ -20,6 +22,9 @@ class MainWindow(QMainWindow):
         buttonBagi = ButtonOperation("/",numbers_controllers.push_operator)
         buttonKurang = ButtonOperation("-",numbers_controllers.push_operator)
         buttonSamaDengan = ButtonOperation("=",numbers_controllers.push_operator)
+
+        Hbox0 = QHBoxLayout()
+        Hbox0.addWidget(textField)
 
         Hbox1 = QHBoxLayout()
         Hbox1.addWidget(button0)
@@ -34,7 +39,9 @@ class MainWindow(QMainWindow):
         Hbox2.addWidget(buttonKurang)
         Hbox2.addWidget(buttonSamaDengan)
 
+
         box = QVBoxLayout()
+        box.addLayout(Hbox0)
         box.addLayout(Hbox1)
         box.addLayout(Hbox2)
 
