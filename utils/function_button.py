@@ -11,13 +11,15 @@ import re
 
 
 class ButtonOperation(QPushButton):
-    def __init__(self,text,callback):
+    def __init__(self,text,callback,fixSize=0,fontSize=0):
         super().__init__()
         self.setText(str(text))
-        font = QFont()
-        font.setPointSize(14)
-        self.setFont(font)
-        self.setFixedSize(80,80)
+        if (fixSize > 0):
+            self.setFixedSize(fixSize,fixSize)
+        if (fontSize > 0):
+            font = QFont()
+            font.setPointSize(fontSize)
+            self.setFont(font)
         self.clicked.connect(lambda : callback(text))
 
 #  ** How to use **
