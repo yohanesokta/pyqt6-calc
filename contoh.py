@@ -4,7 +4,6 @@ from utils.function_button import ButtonOperation,MathExecs
 
 # Controller dari MathExecs untuk menyimpan sebuah nilai dari 1 - 9 dan operator
 
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()

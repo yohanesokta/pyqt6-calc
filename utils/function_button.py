@@ -1,3 +1,4 @@
+from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import  QPushButton
 import re
 
@@ -13,6 +14,10 @@ class ButtonOperation(QPushButton):
     def __init__(self,text,callback):
         super().__init__()
         self.setText(str(text))
+        font = QFont()
+        font.setPointSize(14)
+        self.setFont(font)
+        self.setFixedSize(80,80)
         self.clicked.connect(lambda : callback(text))
 
 #  ** How to use **
@@ -38,9 +43,10 @@ class MathExecs:
             operasi = re.sub(r'\b0+(\d+)', r'\1',self.__str__())
             self.listNumber :list = str(eval(operasi)).split()
             self.operator = None
-    def clearState(self):
+    def clearState(self,_):
         self.listNumber = []
         self.operator = None
+        self.textState.setText(self.__str__())
 
     def __str__(self):
         if (self.listNumber != []):
